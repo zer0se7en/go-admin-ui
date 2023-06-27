@@ -94,7 +94,7 @@ export default {
           trigger: 'change'
         }]
       },
-      sys_app_logoAction: 'http://localhost:8000/api/v1/public/uploadFile',
+      sys_app_logoAction: process.env.VUE_APP_BASE_API + '/api/v1/public/uploadFile',
       sys_app_logofileList: [],
       sys_index_skinNameOptions: [{
         'label': '蓝色',
@@ -129,6 +129,11 @@ export default {
             this.msgSuccess(response.msg)
             this.open = false
             this.getList()
+            const { sys_app_name, sys_app_logo } = this.form
+            this.$store.commit('system/SET_INFO', {
+              sys_app_logo,
+              sys_app_name
+            })
           } else {
             this.msgError(response.msg)
           }

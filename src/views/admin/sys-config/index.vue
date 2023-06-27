@@ -172,7 +172,7 @@
         />
 
         <!-- 添加或修改参数配置对话框 -->
-        <el-dialog :title="title" :visible.sync="open" width="500px">
+        <el-dialog :title="title" :visible.sync="open" width="500px" :close-on-click-modal="false">
           <el-form ref="form" :model="form" :rules="rules" label-width="80px">
             <el-form-item label="参数名称" prop="configName">
               <el-input v-model="form.configName" placeholder="请输入参数名称" :disabled="isEdit" />
@@ -350,7 +350,6 @@ export default {
       const ID = row.id || this.ids
       getConfig(ID).then(response => {
         this.form = response.data
-        this.form.isFrontend = String(this.form.isFrontend)
         this.open = true
         this.title = '修改参数'
         this.isEdit = true
@@ -360,7 +359,6 @@ export default {
     submitForm: function() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          this.form.isFrontend = parseInt(this.form.isFrontend)
           if (this.form.id !== undefined) {
             updateConfig(this.form).then(response => {
               if (response.code === 200) {

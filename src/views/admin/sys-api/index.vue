@@ -22,10 +22,10 @@
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item label="类型" prop="action">
+          <el-form-item label="Method" prop="action">
             <el-select
               v-model="queryParams.action"
-              placeholder="请选择类型"
+              placeholder="请选择Method"
               clearable
               size="small"
               @keyup.enter.native="handleQuery"
@@ -36,7 +36,19 @@
               <el-option value="DELETE">DELETE</el-option>
             </el-select>
           </el-form-item>
-
+          <el-form-item label="类型" prop="type">
+            <el-select
+              v-model="queryParams.type"
+              placeholder="请选择类型"
+              clearable
+              size="small"
+              @keyup.enter.native="handleQuery"
+            >
+              <el-option value="SYS">SYS</el-option>
+              <el-option value="BUS">BUS</el-option>
+              <el-option value="暂无">暂无</el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
             <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -145,7 +157,7 @@
         <el-drawer
           ref="drawer"
           :title="title"
-          :before-close="handleClose"
+          :before-close="cancel"
           :visible.sync="open"
           direction="rtl"
           custom-class="demo-drawer"
@@ -251,6 +263,7 @@ export default {
         name: undefined,
         title: undefined,
         path: undefined,
+        type: undefined,
         action: undefined,
         parentId: undefined
 
@@ -272,21 +285,10 @@ export default {
   },
   methods: {
     handleClose(done) {
-      // if (this.loading) {
-      //   return
-      // }
-      // this.$confirm('需要提交表单吗？')
-      //   .then(_ => {
-      //     this.loading = true
-      //     this.timer = setTimeout(() => {
-      //       done()
-      //       // 动画关闭需要一定的时间
-      //       setTimeout(() => {
-      //         this.loading = false
-      //       }, 400)
-      //     }, 2000)
-      //   })
-      //   .catch(_ => {})
+      if (this.loading) {
+        return
+      }
+      done()
     },
     /** 查询参数列表 */
     getList() {

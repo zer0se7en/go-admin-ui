@@ -156,7 +156,7 @@
                 >修改
                 </el-button>
                 <el-button
-                  v-if="scope.row.entry_id!==0"
+                  v-if="scope.row.entry_id!==0&& scope.row.status!=1"
                   v-permisaction="['job:sysJob:remove']"
                   size="mini"
                   type="text"
@@ -165,7 +165,7 @@
                 >停止
                 </el-button>
                 <el-button
-                  v-if="scope.row.entry_id==0"
+                  v-if="scope.row.entry_id==0 && scope.row.status!=1"
                   v-permisaction="['job:sysJob:start']"
                   size="mini"
                   type="text"
@@ -194,7 +194,7 @@
           />
 
           <!-- 添加或修改对话框 -->
-          <el-dialog v-dialogDrag :title="title" :visible.sync="open" width="700px" append-to-body>
+          <el-dialog v-dialogDrag :title="title" :visible.sync="open" width="700px" append-to-body :close-on-click-modal="false">
             <el-form ref="form" :model="form" :rules="rules" label-width="120px">
               <el-row>
                 <el-col :span="12">
